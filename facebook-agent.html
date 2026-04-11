@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סוכן פרסום פייסבוק | ייעוץ פנסיוני</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f1a;
+    --surface: #161926;
+    --surface2: #1e2235;
+    --border: #2a2f4a;
+    --accent: #4f6ef7;
+    --accent2: #7c3aed;
+    --accent3: #06b6d4;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --text: #e8eaf6;
+    --text2: #8892b0;
+    --fb: #1877f2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #0f1228 0%, #1a1040 50%, #0f1228 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .logo-text { font-size: 18px; font-weight: 700; }
+  .logo-sub { font-size: 12px; color: var(--text2); font-weight: 400; }
+  .header-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 4px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--text2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+  }
+  .tab-btn:hover:not(.active) { background: var(--surface2); color: var(--text); }
+
+  /* Layout */
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 72px);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sidebar-section {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 8px 6px;
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text2);
+  }
+  .sidebar-item:hover { background: var(--surface2); color: var(--text); }
+  .sidebar-item.active {
+    background: linear-gradient(135deg, rgba(79,110,247,0.2), rgba(124,58,237,0.2));
+    color: var(--accent);
+    border: 1px solid rgba(79,110,247,0.3);
+  }
+  .sidebar-item .icon { font-size: 18px; width: 24px; text-align: center; }
+  .badge {
+    margin-right: auto;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+  }
+
+  /* Main content */
+  .main { padding: 28px; overflow-y: auto; }
+
+  /* Tabs content */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Page title */
+  .page-title {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+  .page-sub { font-size: 14px; color: var(--text2); margin-bottom: 24px; }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* Stat cards */
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    transition: transform 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-2px); }
+  .stat-label { font-size: 12px; color: var(--text2); margin-bottom: 8px; font-weight: 500; }
+  .stat-value { font-size: 28px; font-weight: 900; margin-bottom: 4px; }
+  .stat-change { font-size: 12px; }
+  .up { color: var(--success); }
+  .down { color: var(--danger); }
+
+  /* Form elements */
+  label { font-size: 13px; font-weight: 600; color: var(--text2); display: block; margin-bottom: 6px; }
+  select, textarea, input[type=text], input[type=number] {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    direction: rtl;
+  }
+  select:focus, textarea:focus, input:focus { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 90px; }
+
+  .form-group { margin-bottom: 16px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: var(--border); }
+  .btn-fb { background: var(--fb); color: white; }
+  .btn-fb:hover { opacity: 0.9; }
+  .btn-success { background: var(--success); color: white; }
+  .btn-sm { padding: 6px 14px; font-size: 13px; }
+  .btn-lg { padding: 14px 28px; font-size: 16px; font-weight: 900; }
+  .btn-full { width: 100%; justify-content: center; }
+
+  /* Loading animation */
+  .spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* AI Output box */
+  .ai-output {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 80px;
+    white-space: pre-wrap;
+    font-family: 'Assistant', sans-serif;
+    position: relative;
+  }
+  .ai-output.loading { color: var(--text2); font-style: italic; }
+
+  /* Post preview */
+  .fb-preview {
+    background: white;
+    color: #1c1e21;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: Helvetica, Arial, sans-serif;
+    direction: rtl;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .fb-preview-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+  .fb-avatar {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .fb-name { font-weight: 700; font-size: 14px; color: #050505; }
+  .fb-time { font-size: 12px; color: #65676b; }
+  .fb-preview-body { padding: 0 16px 12px; font-size: 15px; line-height: 1.5; color: #050505; }
+  .fb-preview-image {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 48px;
+  }
+  .fb-preview-actions {
+    display: flex;
+    border-top: 1px solid #e4e6eb;
+    padding: 4px 0;
+    margin: 0 16px;
+  }
+  .fb-action {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #65676b;
+    cursor: pointer;
+  }
+
+  /* Calendar grid */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  .cal-header {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text2);
+    padding: 8px 4px;
+  }
+  .cal-day {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 6px;
+    min-height: 72px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .cal-day:hover { border-color: var(--accent); }
+  .cal-day.has-post { border-color: rgba(79,110,247,0.5); background: rgba(79,110,247,0.08); }
+  .cal-day.today { border-color: var(--accent); }
+  .cal-post-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin: 2px;
+  }
+  .cal-post-tag {
+    font-size: 10px;
+    background: rgba(79,110,247,0.2);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 2px 5px;
+    display: block;
+    margin-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Campaign cards */
+  .campaign-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .campaign-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .campaign-name { font-weight: 700; font-size: 15px; }
+  .status-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .status-active { background: rgba(16,185,129,0.15); color: var(--success); }
+  .status-paused { background: rgba(245,158,11,0.15); color: var(--warning); }
+  .status-draft { background: rgba(136,146,176,0.15); color: var(--text2); }
+  .campaign-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .metric { text-align: center; }
+  .metric-val { font-size: 18px; font-weight: 900; }
+  .metric-label { font-size: 11px; color: var(--text2); }
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  /* Audience tags */
+  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag {
+    background: rgba(79,110,247,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(79,110,247,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .tag.removable { cursor: pointer; }
+  .tag.removable:hover { background: rgba(239,68,68,0.15); color: var(--danger); border-color: rgba(239,68,68,0.3); }
+
+  /* Divider */
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  /* Alert */
+  .alert {
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .alert-info { background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.3); color: var(--accent3); }
+  .alert-success { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: var(--success); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Typing cursor */
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .cursor { display: inline-block; animation: blink 1s infinite; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">
+    <div class="logo-icon">📊</div>
+    <div>
+      <div class="logo-text">PensionAds AI</div>
+      <div class="logo-sub">סוכן פרסום פייסבוק לייעוץ פנסיוני</div>
+    </div>
+  </div>
+  <div class="header-tabs">
+    <button class="tab-btn active" onclick="switchTab('content')">✍️ תוכן</button>
+    <button class="tab-btn" onclick="switchTab('calendar')">📅 לוח</button>
+    <button class="tab-btn" onclick="switchTab('campaigns')">🎯 קמפיינים</button>
+    <button class="tab-btn" onclick="switchTab('analytics')">📈 ביצועים</button>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section">סוגי תוכן</div>
+    <div class="sidebar-item active" onclick="setPostType(this,'educational')">
+      <span class="icon">🎓</span> פוסט חינוכי
+    </div>
+    <div class="sidebar-item" onclick="setPostType(this,'engagement')">
+      <span class="icon">💬</span> עידוד אינטראקציה
+    </div>
+    <div class="sidebar-item" onclick="setPostType(this,'testimonial')">
+      <span class="icon">⭐</span> המלצת לקוח
+    </div>
+    <div class="sidebar-item" onclick="setPostType(this,'tips')">
+      <span class="icon">💡</span> טיפ מהיר
+    </div>
+    <div class="sidebar-item" onclick="setPostType(this,'campaign')">
+      <span class="icon">🎯</span> פוסט ממומן
+      <span class="badge">HOT</span>
+    </div>
+    <div class="sidebar-item" onclick="setPostType(this,'story')">
+      <span class="icon">📱</span> סטורי / ריל
+    </div>
+
+    <div class="sidebar-section">נושאים פנסיוניים</div>
+    <div class="sidebar-item" onclick="setTopic('pension')"><span class="icon">🏦</span> קרן פנסיה</div>
+    <div class="sidebar-item" onclick="setTopic('gemel')"><span class="icon">💰</span> קופת גמל</div>
+    <div class="sidebar-item" onclick="setTopic('bituach')"><span class="icon">🛡️</span> ביטוח מנהלים</div>
+    <div class="sidebar-item" onclick="setTopic('keren')"><span class="icon">📈</span> קרן השתלמות</div>
+    <div class="sidebar-item" onclick="setTopic('retire')"><span class="icon">🏖️</span> תכנון פרישה</div>
+
+    <div class="divider"></div>
+    <div class="sidebar-item" onclick="switchTab('calendar')"><span class="icon">📅</span> תזמן פוסט</div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- TAB: Content -->
+    <div id="tab-content" class="tab-content active">
+      <div class="page-title">✍️ כתיבת תוכן חכמה</div>
+      <div class="page-sub">הסוכן יכתוב עבורך פוסטים מקצועיים לייעוץ פנסיוני</div>
+
+      <div class="grid-2">
+        <div>
+          <div class="card">
+            <div class="card-title">⚙️ הגדרות פוסט</div>
+
+            <div class="form-group">
+              <label>נושא הפוסט</label>
+              <input type="text" id="topicInput" placeholder="למשל: יתרונות קרן פנסיה מקיפה" value="יתרונות קרן פנסיה מקיפה" />
+            </div>
+
+            <div class="form-group">
+              <label>סוג הפוסט</label>
+              <select id="postTypeSelect">
+                <option value="educational">🎓 פוסט חינוכי</option>
+                <option value="engagement">💬 עידוד אינטראקציה</option>
+                <option value="testimonial">⭐ המלצת לקוח</option>
+                <option value="tips">💡 טיפ מהיר</option>
+                <option value="campaign">🎯 פוסט ממומן</option>
+                <option value="story">📱 סטורי</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>קהל יעד</label>
+              <select id="audienceSelect">
+                <option value="employees">👔 שכירים (30-55)</option>
+                <option value="selfemployed">💼 עצמאים</option>
+                <option value="young">🎓 צעירים (25-35)</option>
+                <option value="preretiree">🏖️ לפני פרישה (55+)</option>
+                <option value="hr">🏢 מנהלי HR</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>טון הפוסט</label>
+              <select id="toneSelect">
+                <option value="professional">🎩 מקצועי ואמין</option>
+                <option value="friendly">😊 ידידותי וחם</option>
+                <option value="urgent">⚡ דחוף ומניע לפעולה</option>
+                <option value="educational">📚 מחנך ומסביר</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>הוראות נוספות (אופציונלי)</label>
+              <textarea id="extraInstructions" placeholder="למשל: הוסף נתון סטטיסטי, התייחס לתקנה מסוימת..."></textarea>
+            </div>
+
+            <button class="btn btn-primary btn-full btn-lg" onclick="generatePost()">
+              <span id="genBtnText">✨ צור פוסט עם AI</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-title">👁️ תצוגת פייסבוק</div>
+            <div class="fb-preview">
+              <div class="fb-preview-header">
+                <div class="fb-avatar">פ</div>
+                <div>
+                  <div class="fb-name">משרד הייעוץ הפנסיוני שלי</div>
+                  <div class="fb-time">עכשיו · 🌍</div>
+                </div>
+              </div>
+              <div class="fb-preview-body" id="fbPreviewText">
+                לחץ על "צור פוסט" כדי לראות את התוצאה כאן...
+              </div>
+              <div class="fb-preview-image">🏦</div>
+              <div class="fb-preview-actions">
+                <div class="fb-action">👍 אהבתי</div>
+                <div class="fb-action">💬 תגובה</div>
+                <div class="fb-action">↗️ שיתוף</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">📝 טקסט מלא</div>
+            <div class="ai-output" id="aiOutput">לחץ על "צור פוסט עם AI" להתחלה...</div>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="copyPost()">📋 העתק</button>
+              <button class="btn btn-secondary btn-sm" onclick="generatePost()">🔄 צור שוב</button>
+              <button class="btn btn-fb btn-sm" onclick="schedulePost()">📅 תזמן לפייסבוק</button>
+              <button class="btn btn-success btn-sm" onclick="addToCalendar()">✅ הוסף ללוח</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hashtags -->
+      <div class="card">
+        <div class="card-title">🏷️ האשטאגים מומלצים</div>
+        <div class="tag-list" id="hashtagList">
+          <span class="tag">#ייעוץפנסיוני</span>
+          <span class="tag">#קרןפנסיה</span>
+          <span class="tag">#עתידפיננסי</span>
+          <span class="tag">#פרישה</span>
+          <span class="tag">#חיסכון</span>
+          <span class="tag">#ביטחוןפנסיוני</span>
+          <span class="tag">#ייעוץפיננסי</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Calendar -->
+    <div id="tab-calendar" class="tab-content">
+      <div class="page-title">📅 לוח פרסומים</div>
+      <div class="page-sub">תכנן את הפוסטים שלך לחודש הקרוב</div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+          <div style="font-size:18px;font-weight:700;">אפריל 2026</div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-secondary btn-sm">◀ קודם</button>
+            <button class="btn btn-secondary btn-sm">הבא ▶</button>
+            <button class="btn btn-primary btn-sm" onclick="generateMonthPlan()">✨ צור תכנית חודשית</button>
+          </div>
+        </div>
+
+        <div class="cal-grid" id="calGrid">
+          <!-- Headers -->
+          <div class="cal-header">ראשון</div>
+          <div class="cal-header">שני</div>
+          <div class="cal-header">שלישי</div>
+          <div class="cal-header">רביעי</div>
+          <div class="cal-header">חמישי</div>
+          <div class="cal-header">שישי</div>
+          <div class="cal-header">שבת</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 פוסטים מתוזמנים</div>
+        <div id="scheduledList">
+          <div class="campaign-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-weight:700;margin-bottom:4px;">🎓 יתרונות קרן פנסיה מקיפה</div>
+                <div style="font-size:13px;color:var(--text2);">📅 א' אפריל · ⏰ 09:00 · 👥 שכירים</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <span class="status-badge status-active">מתוזמן</span>
+                <button class="btn btn-secondary btn-sm">✏️ ערוך</button>
+              </div>
+            </div>
+          </div>
+          <div class="campaign-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-weight:700;margin-bottom:4px;">💡 טיפ שבועי: קופת גמל</div>
+                <div style="font-size:13px;color:var(--text2);">📅 ד' אפריל · ⏰ 12:00 · 👥 כולם</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <span class="status-badge status-active">מתוזמן</span>
+                <button class="btn btn-secondary btn-sm">✏️ ערוך</button>
+              </div>
+            </div>
+          </div>
+          <div class="campaign-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-weight:700;margin-bottom:4px;">🎯 קמפיין: פגישת ייעוץ חינם</div>
+                <div style="font-size:13px;color:var(--text2);">📅 ז' אפריל · ⏰ 18:00 · 🎯 ממומן</div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <span class="status-badge status-draft">טיוטה</span>
+                <button class="btn btn-secondary btn-sm">✏️ ערוך</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Campaigns -->
+    <div id="tab-campaigns" class="tab-content">
+      <div class="page-title">🎯 קמפיינים ממומנים</div>
+      <div class="page-sub">ניהול ויצירת קמפיינים לפייסבוק Ads</div>
+
+      <div class="alert alert-info">
+        💡 הסוכן יעזור לך ליצור את הברייף לקמפיין — אותו תוכל להכניס ישירות למנהל המודעות של פייסבוק
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">🆕 יצירת קמפיין חדש</div>
+
+          <div class="form-group">
+            <label>מטרת הקמפיין</label>
+            <select id="campaignGoal">
+              <option>🎯 לידים – פגישת ייעוץ חינם</option>
+              <option>👁️ מודעות – בניית מותג</option>
+              <option>📞 המרה – יצירת קשר</option>
+              <option>📱 תנועה לאתר</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>תקציב יומי (₪)</label>
+            <input type="number" id="budgetInput" value="50" min="20" />
+          </div>
+          <div class="form-group">
+            <label>קהל יעד ראשי</label>
+            <select id="campAudience">
+              <option>שכירים גיל 35-55 – ישראל</option>
+              <option>עצמאים גיל 30-60</option>
+              <option>בעלי עסקים</option>
+              <option>לפני פרישה 50+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>מסר מרכזי</label>
+            <textarea id="campMessage" placeholder="למשל: גלה כמה כסף תחסוך בפנסיה עם ייעוץ מקצועי">גלה כמה כסף תחסוך בפנסיה עם ייעוץ מקצועי חינם</textarea>
+          </div>
+          <button class="btn btn-primary btn-full" onclick="generateCampaign()">
+            ✨ צור ברייף קמפיין עם AI
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📄 ברייף הקמפיין</div>
+          <div class="ai-output" id="campaignOutput" style="min-height:280px;">
+            הגדר את פרטי הקמפיין ולחץ "צור ברייף"...
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button class="btn btn-secondary btn-sm" onclick="copyCampaign()">📋 העתק</button>
+            <button class="btn btn-fb btn-sm">🚀 פתח ב-Ads Manager</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📊 קמפיינים קיימים</div>
+        <div class="campaign-card">
+          <div class="campaign-header">
+            <div class="campaign-name">🎯 פגישת ייעוץ חינם – מרץ 2026</div>
+            <span class="status-badge status-active">פעיל</span>
+          </div>
+          <div style="font-size:13px;color:var(--text2);">₪45/יום · שכירים 35-55 · ישראל</div>
+          <div class="campaign-metrics">
+            <div class="metric"><div class="metric-val" style="color:var(--accent)">1,247</div><div class="metric-label">הגעה</div></div>
+            <div class="metric"><div class="metric-val" style="color:var(--success)">23</div><div class="metric-label">לידים</div></div>
+            <div class="metric"><div class="metric-val" style="color:var(--warning)">₪58</div><div class="metric-label">עלות/ליד</div></div>
+            <div class="metric"><div class="metric-val" style="color:var(--accent3)">3.2%</div><div class="metric-label">CTR</div></div>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+          <div style="font-size:11px;color:var(--text2);margin-top:6px;">72% מהתקציב החודשי · 8 ימים נותרו</div>
+        </div>
+
+        <div class="campaign-card">
+          <div class="campaign-header">
+            <div class="campaign-name">📚 מודעות – קרן השתלמות עצמאים</div>
+            <span class="status-badge status-paused">מושהה</span>
+          </div>
+          <div style="font-size:13px;color:var(--text2);">₪30/יום · עצמאים · ישראל</div>
+          <div class="campaign-metrics">
+            <div class="metric"><div class="metric-val" style="color:var(--accent)">892</div><div class="metric-label">הגעה</div></div>
+            <div class="metric"><div class="metric-val" style="color:var(--success)">11</div><div class="metric-label">לידים</div></div>
+            <div class="metric"><div class="metric-val" style="color:var(--warning)">₪82</div><div class="metric-label">עלות/ליד</div></div>
+            <div class="metric"><div class="metric-val" style="color:var(--accent3)">2.1%</div><div class="metric-label">CTR</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Analytics -->
+    <div id="tab-analytics" class="tab-content">
+      <div class="page-title">📈 ניתוח ביצועים</div>
+      <div class="page-sub">סיכום ביצועי הפוסטים והקמפיינים שלך</div>
+
+      <div class="grid-4" style="margin-bottom:20px;">
+        <div class="stat-card">
+          <div class="stat-label">סה"כ הגעה החודש</div>
+          <div class="stat-value" style="color:var(--accent)">12.4K</div>
+          <div class="stat-change up">↑ 18% לעומת חודש קודם</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">אינטראקציות</div>
+          <div class="stat-value" style="color:var(--success)">847</div>
+          <div class="stat-change up">↑ 24% לעומת חודש קודם</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">לידים שנאספו</div>
+          <div class="stat-value" style="color:var(--warning)">34</div>
+          <div class="stat-change up">↑ 12 לידים חדשים</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">עלות ממוצעת לליד</div>
+          <div class="stat-value" style="color:var(--accent3)">₪67</div>
+          <div class="stat-change down">↓ ירדה ב-8%</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">🏆 הפוסטים הכי מוצלחים</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:24px;min-width:36px;text-align:center;">🥇</div>
+              <div style="flex:1;">
+                <div style="font-weight:600;font-size:14px;">5 טעויות בפנסיה שעולות לך הון</div>
+                <div style="font-size:12px;color:var(--text2);">1,847 הגעה · 234 לייקים · 67 שיתופים</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:24px;min-width:36px;text-align:center;">🥈</div>
+              <div style="flex:1;">
+                <div style="font-weight:600;font-size:14px;">האם אתה חוסך מספיק לפנסיה?</div>
+                <div style="font-size:12px;color:var(--text2);">1,203 הגעה · 189 לייקים · 43 שיתופים</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="font-size:24px;min-width:36px;text-align:center;">🥉</div>
+              <div style="flex:1;">
+                <div style="font-weight:600;font-size:14px;">קרן השתלמות – המדריך לעצמאים</div>
+                <div style="font-size:12px;color:var(--text2);">987 הגעה · 156 לייקים · 38 שיתופים</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🤖 המלצות AI לשיפור</div>
+          <div class="ai-output" id="analyticsAdvice" style="min-height:160px;"></div>
+          <button class="btn btn-primary btn-sm" style="margin-top:12px;" onclick="getAnalyticsAdvice()">✨ קבל המלצות AI</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⏰ שעות הפרסום הטובות ביותר</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:120px;background:var(--surface2);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:22px;font-weight:900;color:var(--success)">09:00</div>
+            <div style="font-size:12px;color:var(--text2);">בוקר – הגעה גבוהה</div>
+            <div style="font-size:11px;color:var(--success)">↑ 34%</div>
+          </div>
+          <div style="flex:1;min-width:120px;background:var(--surface2);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:22px;font-weight:900;color:var(--accent)">12:30</div>
+            <div style="font-size:12px;color:var(--text2);">צהריים – אינטראקציה</div>
+            <div style="font-size:11px;color:var(--accent)">↑ 28%</div>
+          </div>
+          <div style="flex:1;min-width:120px;background:var(--surface2);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:22px;font-weight:900;color:var(--warning)">18:00</div>
+            <div style="font-size:12px;color:var(--text2);">ערב – לידים</div>
+            <div style="font-size:11px;color:var(--warning)">↑ 41%</div>
+          </div>
+          <div style="flex:1;min-width:120px;background:var(--surface2);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:22px;font-weight:900;color:var(--text2)">21:00</div>
+            <div style="font-size:12px;color:var(--text2);">לילה – חלש</div>
+            <div style="font-size:11px;color:var(--danger)">↓ 12%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+let currentPostType = 'educational';
+let currentTopic = 'pension';
+let generatedPost = '';
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
+  if (tab === 'calendar') buildCalendar();
+}
+
+function setPostType(el, type) {
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  currentPostType = type;
+  document.getElementById('postTypeSelect').value = type;
+}
+
+function setTopic(topic) {
+  const topicMap = {
+    pension: 'יתרונות קרן פנסיה מקיפה',
+    gemel: 'חיסכון בקופת גמל',
+    bituach: 'ביטוח מנהלים – מה חשוב לדעת',
+    keren: 'קרן השתלמות לעצמאים',
+    retire: 'תכנון פרישה נכון'
+  };
+  currentTopic = topic;
+  document.getElementById('topicInput').value = topicMap[topic] || topic;
+}
+
+async function generatePost() {
+  const topic = document.getElementById('topicInput').value;
+  const postType = document.getElementById('postTypeSelect').value;
+  const audience = document.getElementById('audienceSelect').value;
+  const tone = document.getElementById('toneSelect').value;
+  const extra = document.getElementById('extraInstructions').value;
+
+  const typeMap = {
+    educational: 'פוסט חינוכי', engagement: 'פוסט עידוד אינטראקציה',
+    testimonial: 'פוסט המלצת לקוח', tips: 'טיפ מהיר',
+    campaign: 'פוסט ממומן', story: 'סטורי/ריל'
+  };
+  const audienceMap = {
+    employees: 'שכירים בגיל 30-55', selfemployed: 'עצמאים',
+    young: 'צעירים 25-35', preretiree: 'אנשים לפני פרישה (55+)', hr: 'מנהלי HR'
+  };
+  const toneMap = {
+    professional: 'מקצועי ואמין', friendly: 'ידידותי וחם',
+    urgent: 'דחוף ומניע לפעולה', educational: 'מחנך ומסביר'
+  };
+
+  const btn = document.getElementById('genBtnText');
+  const output = document.getElementById('aiOutput');
+  const preview = document.getElementById('fbPreviewText');
+
+  btn.innerHTML = '<span class="spinner"></span> מייצר פוסט...';
+  output.textContent = '⏳ הסוכן כותב עבורך...';
+  output.className = 'ai-output loading';
+  preview.textContent = '⏳ טוען...';
+
+  const prompt = `אתה יועץ שיווק דיגיטלי מומחה בתחום הפנסיוני בישראל.
+כתוב פוסט לפייסבוק בעברית עבור יועץ פנסיוני.
+
+פרטים:
+- נושא: ${topic}
+- סוג פוסט: ${typeMap[postType]}
+- קהל יעד: ${audienceMap[audience]}
+- טון: ${toneMap[tone]}
+${extra ? '- הוראות נוספות: ' + extra : ''}
+
+כתוב פוסט מקצועי, אמיתי ומושך. כלול:
+1. פתיח מושך שמושך תשומת לב
+2. גוף הפוסט עם ערך אמיתי לקורא
+3. קריאה לפעולה (CTA) ברורה
+4. 2-3 אמוג'י רלוונטיים לאורך הפוסט
+
+הפוסט צריך להיות בין 80-150 מילים. כתוב ישירות את הפוסט ללא כותרות או הסברים.`;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await response.json();
+    const text = data.content?.[0]?.text || 'שגיאה בקבלת תגובה';
+    generatedPost = text;
+    output.textContent = text;
+    output.className = 'ai-output';
+    preview.textContent = text;
+    updateHashtags(postType, topic);
+  } catch (err) {
+    output.textContent = '❌ שגיאה: ' + err.message;
+    output.className = 'ai-output';
+  }
+
+  btn.innerHTML = '✨ צור פוסט עם AI';
+}
+
+function updateHashtags(postType, topic) {
+  const base = ['#ייעוץפנסיוני', '#עתידפיננסי', '#חיסכון'];
+  const byType = {
+    educational: ['#ידע', '#למידה', '#טיפים'],
+    engagement: ['#שאלה', '#דיון', '#שתפו'],
+    tips: ['#טיפמהיר', '#עצות', '#כדאילדעת'],
+    campaign: ['#ייעוץחינם', '#פגישה', '#הזדמנות'],
+  };
+  const byTopic = {
+    pension: ['#קרןפנסיה', '#פנסיה'],
+    gemel: ['#קופתגמל', '#גמל'],
+    bituach: ['#ביטוחמנהלים'],
+    keren: ['#קרןהשתלמות'],
+    retire: ['#פרישה', '#תכנוןפרישה'],
+  };
+  const all = [...new Set([...base, ...(byType[postType]||[]), ...(byTopic[currentTopic]||[])])];
+  document.getElementById('hashtagList').innerHTML = all.map(h =>
+    `<span class="tag">${h}</span>`
+  ).join('');
+}
+
+function copyPost() {
+  const text = document.getElementById('aiOutput').textContent;
+  navigator.clipboard.writeText(text).then(() => alert('הפוסט הועתק ✅'));
+}
+
+function schedulePost() {
+  alert('💡 העתק את הפוסט ופתח את Meta Business Suite לתזמון ישיר');
+}
+
+function addToCalendar() {
+  alert('✅ הפוסט נוסף ללוח הפרסומים!');
+  switchTab('calendar');
+}
+
+async function generateCampaign() {
+  const goal = document.getElementById('campaignGoal').value;
+  const budget = document.getElementById('budgetInput').value;
+  const audience = document.getElementById('campAudience').value;
+  const message = document.getElementById('campMessage').value;
+  const output = document.getElementById('campaignOutput');
+
+  output.textContent = '⏳ יוצר ברייף קמפיין...';
+  output.className = 'ai-output loading';
+
+  const prompt = `אתה מומחה בפרסום ממומן בפייסבוק לתחום הפנסיוני.
+צור ברייף מפורט לקמפיין פייסבוק בעברית:
+
+מטרה: ${goal}
+תקציב יומי: ₪${budget}
+קהל יעד: ${audience}
+מסר מרכזי: ${message}
+
+כלול בברייף:
+• 🎯 מטרת הקמפיין
+• 👥 הגדרת קהל מדויקת (גיל, תחומי עניין, התנהגות)
+• 📝 3 כותרות מודעה (Headlines)
+• 💬 2 גרסאות טקסט ראשי
+• 🔗 קריאה לפעולה מומלצת
+• 💰 אסטרטגיית תקציב
+• 📊 KPIs למדידה
+
+כתוב בצורה מקצועית ומפורטת.`;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await response.json();
+    output.textContent = data.content?.[0]?.text || 'שגיאה';
+    output.className = 'ai-output';
+  } catch (err) {
+    output.textContent = '❌ שגיאה: ' + err.message;
+    output.className = 'ai-output';
+  }
+}
+
+function copyCampaign() {
+  navigator.clipboard.writeText(document.getElementById('campaignOutput').textContent)
+    .then(() => alert('הברייף הועתק ✅'));
+}
+
+async function getAnalyticsAdvice() {
+  const output = document.getElementById('analyticsAdvice');
+  output.textContent = '⏳ מנתח נתונים...';
+  output.className = 'ai-output loading';
+
+  const prompt = `אתה מומחה שיווק דיגיטלי לתחום הפנסיוני.
+בהתבסס על הנתונים הבאים:
+- הגעה: 12,400 איש
+- אינטראקציות: 847
+- לידים: 34
+- עלות לליד: ₪67
+- שעות הטובות: 09:00, 18:00
+- פוסט מוביל: "5 טעויות בפנסיה"
+
+תן 4-5 המלצות מעשיות לשיפור הביצועים.
+כתוב בעברית, קצר וממוקד.`;
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 700,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await res.json();
+    output.textContent = data.content?.[0]?.text || 'שגיאה';
+    output.className = 'ai-output';
+  } catch (err) {
+    output.textContent = '❌ שגיאה: ' + err.message;
+    output.className = 'ai-output';
+  }
+}
+
+async function generateMonthPlan() {
+  alert('✨ מייצר תכנית חודשית מלאה עם AI...\n\nהסוכן יתזמן 12-16 פוסטים לחודש עם נושאים מגוונים.');
+}
+
+function buildCalendar() {
+  const grid = document.getElementById('calGrid');
+  const headers = grid.querySelectorAll('.cal-header');
+
+  // Clear existing days
+  const days = grid.querySelectorAll('.cal-day');
+  days.forEach(d => d.remove());
+
+  const plannedPosts = {
+    1: 'קרן פנסיה', 4: 'טיפ שבועי', 7: 'קמפיין', 9: 'שאלת הקהל',
+    14: 'ביטוח מנהלים', 16: 'טיפ שבועי', 21: 'פרישה', 23: 'טיפ שבועי',
+    28: 'גמל', 30: 'טיפ שבועי'
+  };
+
+  // April 2026 starts on Wednesday (index 3 in Sun-Sat)
+  const startDay = 3;
+  for (let i = 0; i < startDay; i++) {
+    const empty = document.createElement('div');
+    empty.style.minHeight = '72px';
+    grid.appendChild(empty);
+  }
+
+  for (let d = 1; d <= 30; d++) {
+    const div = document.createElement('div');
+    div.className = 'cal-day' + (plannedPosts[d] ? ' has-post' : '') + (d === 3 ? ' today' : '');
+    div.innerHTML = `<strong style="font-size:14px">${d}</strong>${plannedPosts[d] ? `<span class="cal-post-tag">📝 ${plannedPosts[d]}</span>` : ''}`;
+    div.onclick = () => alert(`📅 יום ${d} אפריל${plannedPosts[d] ? '\n\nפוסט מתוזמן: ' + plannedPosts[d] : '\n\nלחץ להוספת פוסט'}`);
+    grid.appendChild(div);
+  }
+}
+
+// Init
+buildCalendar();
+</script>
+</body>
+</html>
