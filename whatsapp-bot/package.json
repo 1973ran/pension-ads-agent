@@ -1,0 +1,17 @@
+{
+  "name": "pension-ads-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "סוכן פרסום פנסיוני – שיחה דרך WhatsApp",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20.12"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0"
+  }
+}
