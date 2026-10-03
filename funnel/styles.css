@@ -56,7 +56,7 @@ label { display: block; font-size: 13px; font-weight: 700; color: var(--muted); 
 input { width: 100%; margin-top: 4px; padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); color: var(--text); font: 500 16px 'Heebo', sans-serif; }
 input:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
 .calc-out { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--band); border-radius: 12px; padding: 14px; }
-.calc-out strong { display: block; font-size: 26px; font-weight: 900; color: var(--danger); }
+.calc-out strong { display: block; font-size: 26px; font-weight: 900; color: var(--accent); }
 .calc .btn { margin-top: 14px; }
 
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }

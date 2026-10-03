@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>בדיקת פנסיה חינם | רן פיננסים</title>
-<meta name="description" content="גלו תוך דקה כמה הפנסיה שלכם עלולה להפסיד בגלל דמי ניהול גבוהים, וקבלו בדיקה אישית ללא עלות.">
+<title>בדיקת שיפור כלכלי | רן פיננסים</title>
+<meta name="description" content="גלו תוך דקה כמה כסף אפשר לחסוך בהלוואות, בעמלות ובדמי ניהול, וקבלו בדיקת שיפור כלכלי אישית ללא עלות.">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script src="config.js"></script>
@@ -23,38 +23,38 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">בדיקת פנסיה אישית · ללא עלות · ללא התחייבות</span>
-      <h1>הפנסיה שלכם עובדת בשבילכם<br>או <span class="hl">בשביל חברת הביטוח?</span></h1>
-      <p class="lead">הפרש של חצי אחוז בדמי הניהול יכול להסתכם במאות אלפי שקלים עד הפרישה. גלו תוך דקה כמה זה אצלכם, וקבלו בדיקה מקצועית של כל התיק הפנסיוני.</p>
+      <span class="eyebrow">בדיקת שיפור כלכלי · ללא עלות · ללא התחייבות</span>
+      <h1>אותה משכורת.<br><span class="hl">יותר כסף בסוף החודש.</span></h1>
+      <p class="lead">ריבית גבוהה על הלוואות, עמלות שאף אחד לא בדק ודמי ניהול מיותרים מצטברים לאלפי שקלים בשנה. גלו תוך דקה כמה זה אצלכם, וקבלו תוכנית שיפור כלכלי אישית.</p>
       <div class="cta-row">
-        <a href="#calc" class="btn btn-lg">חשבו כמה אתם מפסידים ←</a>
+        <a href="#calc" class="btn btn-lg">חשבו כמה אפשר לחסוך ←</a>
         <a href="#quiz" class="btn btn-ghost btn-lg">אני רוצה בדיקה אישית</a>
       </div>
       <ul class="checks">
-        <li>בדיקת דמי ניהול מול המקובל בשוק</li>
-        <li>איתור ביטוחים כפולים וכספים "שוכחים"</li>
-        <li>התאמת מסלול השקעה לגיל ולמטרות</li>
+        <li>הלוואות ומשכנתא: מיחזור והוזלת ריבית</li>
+        <li>עמלות בנק, ביטוחים והוצאות קבועות</li>
+        <li>חסכונות שעובדים בשבילכם ולא בשביל הגוף המנהל</li>
       </ul>
     </div>
 
     <!-- ===== שלב 2: LEAD MAGNET – מחשבון ===== -->
     <div class="card calc" id="calc">
-      <h2>מחשבון דמי ניהול</h2>
-      <p class="muted">הזינו נתונים מהדוח השנתי (בערך זה מספיק)</p>
+      <h2>מחשבון שיפור כלכלי</h2>
+      <p class="muted">הזינו נתונים בערך. זה מספיק להערכה ראשונית</p>
       <div class="field-grid">
-        <label>גיל<input type="number" id="c-age" value="40" min="18" max="66"></label>
-        <label>צבירה נוכחית (₪)<input type="number" id="c-balance" value="250000" step="10000"></label>
-        <label>הפקדה חודשית (₪)<input type="number" id="c-deposit" value="2500" step="100"></label>
-        <label>דמי ניהול מצבירה (%)<input type="number" id="c-feeB" value="0.5" step="0.05"></label>
-        <label>דמי ניהול מהפקדה (%)<input type="number" id="c-feeD" value="3" step="0.1"></label>
-        <label>דמי ניהול יעד מצבירה (%)<input type="number" id="c-tB" value="0.2" step="0.05"></label>
+        <label>יתרת הלוואות (₪)<input type="number" id="c-loans" value="150000" step="5000" min="0"></label>
+        <label>ריבית ממוצעת בהלוואות (%)<input type="number" id="c-rate" value="7" step="0.25" min="0"></label>
+        <label>סך חסכונות (₪)<input type="number" id="c-savings" value="300000" step="10000" min="0"></label>
+        <label>דמי ניהול ממוצעים (%)<input type="number" id="c-fee" value="0.8" step="0.05" min="0"></label>
+        <label>הוצאות קבועות בחודש (₪)<input type="number" id="c-fixed" value="2500" step="100" min="0"></label>
+        <label>מינוס ממוצע בעו"ש (₪)<input type="number" id="c-od" value="5000" step="500" min="0"></label>
       </div>
       <div class="calc-out">
-        <div><span class="muted">הפסד משוער עד גיל 67</span><strong id="c-loss">—</strong></div>
-        <div><span class="muted">ההפרש בקצבה החודשית</span><strong id="c-pension">—</strong></div>
+        <div><span class="muted">חיסכון משוער בשנה</span><strong id="c-year">—</strong></div>
+        <div><span class="muted">ב-10 שנים</span><strong id="c-ten">—</strong></div>
       </div>
-      <p class="fine">הערכה בלבד: תשואה שנתית של 4%, פרישה בגיל 67, מקדם המרה 200 ודמי ניהול יעד מהפקדה של 1.5%. התוצאה אינה הבטחה ואינה ייעוץ.</p>
-      <a href="#quiz" class="btn btn-full" id="c-cta">אני רוצה לבדוק את זה אצלי בדיוק ←</a>
+      <p class="fine">הערכה בלבד, לפי הנחות שמרניות: הוזלת ריבית ההלוואות ב-1.5%, דמי ניהול של 0.3%, קיצוץ של 10% בהוצאות הקבועות וריבית חריגה של 12% על המינוס. התוצאה אינה הבטחה ואינה ייעוץ.</p>
+      <a href="#quiz" class="btn btn-full">אני רוצה לבדוק את זה אצלי בדיוק ←</a>
     </div>
   </div>
 </section>
@@ -62,11 +62,11 @@
 <!-- ===== שלב 3: PROBLEM / AGITATE ===== -->
 <section class="band">
   <div class="wrap">
-    <h2 class="center">רוב החוסכים לא באמת יודעים מה יש להם</h2>
+    <h2 class="center">הכסף לא נעלם. הוא דולף.</h2>
     <div class="grid-3">
-      <div class="tile"><span class="ico">💸</span><h3>דמי ניהול שלא עודכנו</h3><p>הסכם שנחתם לפני שנים, דרך המעסיק או סוכן, ומאז אף אחד לא בדק אותו.</p></div>
-      <div class="tile"><span class="ico">🧩</span><h3>כספים מפוזרים</h3><p>כמה קופות מעבודות קודמות, כל אחת עם דמי ניהול משלה, ולפעמים ביטוח כפול.</p></div>
-      <div class="tile"><span class="ico">📉</span><h3>מסלול השקעה לא מתאים</h3><p>מסלול שנבחר אוטומטית ולא מתאים לגיל, לסיכון או לתוכניות שלכם.</p></div>
+      <div class="tile"><span class="ico">🏦</span><h3>הלוואות יקרות</h3><p>הלוואה שנלקחה "מהר", משכנתא שלא מוחזרה, ריבית שאפשר היה להוריד בשיחה אחת.</p></div>
+      <div class="tile"><span class="ico">💸</span><h3>עמלות והוצאות קבועות</h3><p>עמלות בנק, ביטוחים כפולים ומנויים שממשיכים לרדת כל חודש בלי שאף אחד שם לב.</p></div>
+      <div class="tile"><span class="ico">📉</span><h3>כסף שלא עובד</h3><p>חסכונות בדמי ניהול גבוהים או במסלול לא מתאים, וכסף שיושב בעו"ש בלי תשואה.</p></div>
     </div>
   </div>
 </section>
@@ -76,9 +76,9 @@
   <div class="wrap">
     <h2 class="center">איך זה עובד?</h2>
     <ol class="steps">
-      <li><b>ממלאים שאלון קצר</b><span>חצי דקה, כדי שנבין מה רלוונטי לכם.</span></li>
-      <li><b>מאשרים צפייה בנתונים</b><span>דרך המסלקה הפנסיונית, בלי לחפש דוחות.</span></li>
-      <li><b>מקבלים ניתוח והמלצות</b><span>בשיחה אישית, בשפה פשוטה, עם צעדים ברורים.</span></li>
+      <li><b>ממלאים שאלון קצר</b><span>חצי דקה, כדי שנבין מה הכי רלוונטי לכם.</span></li>
+      <li><b>עושים סדר בתמונה</b><span>מעבירים כמה נתונים בסיסיים ואנחנו ממפים את כל הכסף שלכם.</span></li>
+      <li><b>מקבלים תוכנית שיפור</b><span>בשיחה אישית, בשפה פשוטה, עם צעדים ברורים ומספרים אמיתיים.</span></li>
     </ol>
   </div>
 </section>
@@ -101,42 +101,42 @@
           <div class="opts" data-name="status">
             <button type="button" data-v="שכיר/ה">👔 שכיר/ה</button>
             <button type="button" data-v="עצמאי/ת">💼 עצמאי/ת</button>
-            <button type="button" data-v="בעל/ת שליטה">🏢 בעל/ת שליטה</button>
-            <button type="button" data-v="לקראת פרישה">🏖️ לקראת פרישה</button>
+            <button type="button" data-v="בעל/ת עסק">🏢 בעל/ת עסק</button>
+            <button type="button" data-v="פנסיונר/ית">🏖️ פנסיונר/ית</button>
           </div>
         </fieldset>
         <fieldset class="q-step" data-step="2">
-          <legend>באיזה טווח גילאים?</legend>
-          <div class="opts" data-name="age">
-            <button type="button" data-v="עד 30">עד 30</button>
-            <button type="button" data-v="31-45">31–45</button>
-            <button type="button" data-v="46-55">46–55</button>
-            <button type="button" data-v="56+">56+</button>
+          <legend>מה הכי חשוב לכם לשפר?</legend>
+          <div class="opts" data-name="concern">
+            <button type="button" data-v="הלוואות ומשכנתא">🏦 הלוואות ומשכנתא</button>
+            <button type="button" data-v="יציאה מהמינוס">➖ יציאה מהמינוס</button>
+            <button type="button" data-v="חיסכון והשקעות">📈 חיסכון והשקעות</button>
+            <button type="button" data-v="סדר כללי בכסף">🧭 סדר כללי בכסף</button>
           </div>
         </fieldset>
         <fieldset class="q-step" data-step="3">
-          <legend>מה הכי מעניין אתכם לבדוק?</legend>
-          <div class="opts" data-name="concern">
-            <button type="button" data-v="דמי ניהול">💸 דמי ניהול</button>
-            <button type="button" data-v="ביטוחים כפולים">🛡️ ביטוחים כפולים</button>
-            <button type="button" data-v="תכנון פרישה">📅 תכנון פרישה</button>
-            <button type="button" data-v="לא יודע/ת מה יש לי">🤷 לא יודע/ת מה יש לי</button>
+          <legend>איך הייתם מתארים את סוף החודש?</legend>
+          <div class="opts" data-name="monthEnd">
+            <button type="button" data-v="נשאר עודף">😊 נשאר עודף</button>
+            <button type="button" data-v="בדיוק מסתדרים">😐 בדיוק מסתדרים</button>
+            <button type="button" data-v="נכנסים למינוס">😟 נכנסים למינוס</button>
+            <button type="button" data-v="לא בטוח/ה">🤷 לא בטוח/ה</button>
           </div>
         </fieldset>
         <fieldset class="q-step" data-step="4">
-          <legend>מתי בפעם האחרונה מישהו בדק לכם את התיק?</legend>
-          <div class="opts" data-name="lastCheck">
-            <button type="button" data-v="בשנה האחרונה">בשנה האחרונה</button>
-            <button type="button" data-v="לפני 2-5 שנים">לפני 2–5 שנים</button>
-            <button type="button" data-v="מעולם לא">מעולם לא</button>
-            <button type="button" data-v="לא זוכר/ת">לא זוכר/ת</button>
+          <legend>יש לכם הלוואות פעילות (כולל משכנתא)?</legend>
+          <div class="opts" data-name="loans">
+            <button type="button" data-v="אין">אין</button>
+            <button type="button" data-v="רק משכנתא">רק משכנתא</button>
+            <button type="button" data-v="הלוואה אחת">הלוואה אחת</button>
+            <button type="button" data-v="כמה הלוואות">כמה הלוואות</button>
           </div>
         </fieldset>
         <fieldset class="q-step" data-step="5">
           <legend>מעולה! לאן לשלוח את תוצאות הבדיקה?</legend>
           <label>שם מלא<input name="name" required autocomplete="name"></label>
           <label>טלפון נייד<input name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="05X-XXXXXXX"></label>
-          <label class="consent"><input type="checkbox" name="consent" required> אני מאשר/ת ליצור איתי קשר בנוגע לבדיקה הפנסיונית</label>
+          <label class="consent"><input type="checkbox" name="consent" required> אני מאשר/ת ליצור איתי קשר בנוגע לבדיקת השיפור הכלכלי</label>
           <p class="err" id="q-err" hidden></p>
           <button type="submit" class="btn btn-full btn-lg" id="q-submit">שלחו לי בדיקה חינם</button>
         </fieldset>
@@ -150,8 +150,8 @@
   <div class="wrap narrow">
     <h2 class="center">שאלות נפוצות</h2>
     <details><summary>כמה עולה הבדיקה?</summary><p>הבדיקה הראשונית ללא עלות וללא התחייבות. אם תרצו להמשיך לליווי, נציג את התנאים בשקיפות מלאה מראש.</p></details>
-    <details><summary>אני צריך/ה להביא דוחות?</summary><p>לא חובה. עם ייפוי כוח דיגיטלי למסלקה הפנסיונית אפשר לראות את כל המוצרים במקום אחד.</p></details>
-    <details><summary>זה יחייב אותי לעבור חברה?</summary><p>לא. לפעמים מספיק משא ומתן על דמי הניהול או החלפת מסלול באותה קופה. ההמלצה נבנית לפי מה שטוב לכם.</p></details>
+    <details><summary>אילו נתונים צריך להכין?</summary><p>מספיקים פירוט עו"ש של החודשים האחרונים, פרטי ההלוואות ודוח שנתי מהחסכונות. אם משהו חסר, נעזור לכם להשיג אותו.</p></details>
+    <details><summary>אני לא במצב רע. זה רלוונטי גם לי?</summary><p>בהחלט. שיפור כלכלי הוא לא רק יציאה מהמינוס, אלא גם הוזלת הוצאות, ריבית ודמי ניהול, ובניית חיסכון חכם יותר.</p></details>
     <details><summary>כמה זמן זה לוקח?</summary><p>מילוי השאלון לוקח חצי דקה, והשיחה האישית כ-30 דקות.</p></details>
   </div>
 </section>
@@ -160,12 +160,12 @@
   <div class="wrap">
     <p><b data-brand-name></b> · <span data-brand-tagline></span> <span id="license"></span></p>
     <p>📞 <a id="phone-link" class="hl"></a></p>
-    <p class="fine">המידע באתר הוא כללי ואינו מהווה ייעוץ פנסיוני או תחליף לייעוץ אישי המותאם לנתוני כל אדם. תשואות עבר אינן מבטיחות תשואות בעתיד.</p>
+    <p class="fine">המידע באתר הוא כללי ואינו מהווה ייעוץ השקעות, ייעוץ פנסיוני או תחליף לייעוץ אישי המותאם לנתוני כל אדם. תשואות עבר אינן מבטיחות תשואות בעתיד.</p>
   </div>
 </footer>
 
 <a class="wa-float" id="wa-float" aria-label="וואטסאפ">💬</a>
-<div class="sticky-cta"><a href="#quiz" class="btn btn-full">לבדיקת פנסיה חינם</a></div>
+<div class="sticky-cta"><a href="#quiz" class="btn btn-full">לבדיקת שיפור כלכלי חינם</a></div>
 
 <script src="landing.js"></script>
 </body>

@@ -23,10 +23,10 @@
     <h3>מה קורה עכשיו?</h3>
     <ol>
       <li>נחזור אליך תוך יום עסקים לתיאום שיחה קצרה.</li>
-      <li>נשלח קישור לייפוי כוח דיגיטלי למסלקה הפנסיונית.</li>
-      <li>בשיחה נציג תמונת מצב מלאה והמלצות ברורות.</li>
+      <li>נבקש כמה נתונים בסיסיים: פירוט עו"ש, הלוואות וחסכונות.</li>
+      <li>בשיחה נציג תמונת מצב מלאה ותוכנית שיפור עם צעדים ברורים.</li>
     </ol>
-    <p class="fine">בינתיים, כדאי להכין את הדוח השנתי האחרון מהקרן (אם יש בהישג יד).</p>
+    <p class="fine">בינתיים, כדאי להוריד מהבנק פירוט עו"ש של שלושת החודשים האחרונים.</p>
   </div>
 </main>
 <script>
@@ -35,7 +35,7 @@
     try { lead = JSON.parse(sessionStorage.getItem('funnel_lead') || '{}'); } catch (e) {}
     if (lead.name) document.getElementById('ty-title').textContent = 'תודה, ' + lead.name.split(' ')[0] + '!';
     document.getElementById('ty-wa').href = Funnel.waLink(
-      'היי, השארתי פרטים לבדיקת פנסיה' + (lead.concern ? ' (' + lead.concern + ')' : '') + '. מתי נוח לדבר?');
+      'היי, השארתי פרטים לבדיקת שיפור כלכלי' + (lead.concern ? ' (' + lead.concern + ')' : '') + '. מתי נוח לדבר?');
     if (C.bookingUrl) { var b = document.getElementById('ty-book'); b.href = C.bookingUrl; b.hidden = false; }
     Funnel.track('CompleteRegistration');
   })();

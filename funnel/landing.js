@@ -7,8 +7,8 @@
   document.querySelectorAll('[data-brand-name]').forEach(function (e) { e.textContent = C.brandName; });
   document.querySelectorAll('[data-brand-tagline]').forEach(function (e) { e.textContent = C.brandTagline; });
   document.querySelectorAll('[data-site-link]').forEach(function (e) { e.href = C.siteUrl; });
-  if (C.licenseNumber) $('#license').textContent = '· רישיון יועץ פנסיוני מס׳ ' + C.licenseNumber;
-  $('#wa-float').href = Funnel.waLink('היי, הגעתי מהאתר ואשמח לבדיקת פנסיה');
+  if (C.licenseNumber) $('#license').textContent = '· ' + C.licenseNumber;
+  $('#wa-float').href = Funnel.waLink('היי, הגעתי מהאתר ואשמח לבדיקת שיפור כלכלי');
   $('#wa-float').target = '_blank';
   $('#phone-link').textContent = C.phoneDisplay;
   $('#phone-link').href = 'tel:' + C.phoneDisplay.replace(/-/g, '');
@@ -26,31 +26,24 @@
   }
 
   // ---- מחשבון ----
-  var RET_AGE = 67, RATE = 0.04, TARGET_FEE_D = 1.5, CONVERSION = 200;
-  function project(balance, monthly, years, feeB, feeD) {
-    var r = (1 + RATE - feeB / 100);
-    var m = Math.pow(r, 1 / 12) - 1;
-    var dep = monthly * (1 - feeD / 100);
-    var b = balance;
-    for (var i = 0; i < years * 12; i++) b = b * (1 + m) + dep;
-    return b;
-  }
-  var lastLoss = 0;
+  // הנחות שמרניות (מוצגות למשתמש מתחת למחשבון)
+  var LOAN_CUT = 1.5, TARGET_FEE = 0.3, FIXED_CUT = 0.10, OD_RATE = 0.12;
+  var lastSaving = 0;
   function calc() {
-    var age = +$('#c-age').value || 40;
-    var years = Math.max(0, RET_AGE - age);
-    var bal = +$('#c-balance').value || 0, dep = +$('#c-deposit').value || 0;
-    var cur = project(bal, dep, years, +$('#c-feeB').value || 0, +$('#c-feeD').value || 0);
-    var tgt = project(bal, dep, years, +$('#c-tB').value || 0, TARGET_FEE_D);
-    lastLoss = Math.max(0, tgt - cur);
-    $('#c-loss').textContent = fmt(lastLoss);
-    $('#c-pension').textContent = fmt(lastLoss / CONVERSION) + ' לחודש';
+    var v = function (id) { return Math.max(0, +$(id).value || 0); };
+    var loans = v('#c-loans') * Math.min(LOAN_CUT, v('#c-rate')) / 100;
+    var fees = v('#c-savings') * Math.max(0, v('#c-fee') - TARGET_FEE) / 100;
+    var fixed = v('#c-fixed') * 12 * FIXED_CUT;
+    var od = v('#c-od') * OD_RATE;
+    lastSaving = loans + fees + fixed + od;
+    $('#c-year').textContent = fmt(lastSaving);
+    $('#c-ten').textContent = fmt(lastSaving * 10);
   }
   var calcUsed = false;
   document.querySelectorAll('.calc input').forEach(function (i) {
     i.addEventListener('input', function () {
       calc();
-      if (!calcUsed) { calcUsed = true; Funnel.track('ViewContent', { content_name: 'fee_calculator' }); }
+      if (!calcUsed) { calcUsed = true; Funnel.track('ViewContent', { content_name: 'savings_calculator' }); }
     });
   });
   calc();
@@ -85,7 +78,7 @@
 
     var lead = Object.assign({
       name: name, phone: phone,
-      estimatedLoss: Math.round(lastLoss),
+      estimatedYearlySaving: Math.round(lastSaving),
       page: location.href, ts: new Date().toISOString(),
     }, answers, Funnel.utm);
 
@@ -99,9 +92,9 @@
         .then(done, done);
     } else {
       window.open(Funnel.waLink(
-        'היי, אני ' + name + '. מילאתי את שאלון בדיקת הפנסיה:\n' +
-        'מצב: ' + (answers.status || '-') + '\nגיל: ' + (answers.age || '-') +
-        '\nמה לבדוק: ' + (answers.concern || '-') + '\nבדיקה אחרונה: ' + (answers.lastCheck || '-')
+        'היי, אני ' + name + '. מילאתי את שאלון השיפור הכלכלי:\n' +
+        'מצב תעסוקתי: ' + (answers.status || '-') + '\nמה לשפר: ' + (answers.concern || '-') +
+        '\nסוף החודש: ' + (answers.monthEnd || '-') + '\nהלוואות: ' + (answers.loans || '-')
       ), '_blank');
       done();
     }
