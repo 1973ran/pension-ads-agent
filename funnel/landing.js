@@ -89,8 +89,10 @@
     var done = function () { location.href = 'thank-you.html'; };
     var waUrl = Funnel.waLink(
       'היי, אני ' + name + '. מילאתי את שאלון השיפור הכלכלי:\n' +
+      'טלפון: ' + phone + '\n' +
       'מצב תעסוקתי: ' + (answers.status || '-') + '\nמה לשפר: ' + (answers.concern || '-') +
-      '\nסוף החודש: ' + (answers.monthEnd || '-') + '\nהלוואות: ' + (answers.loans || '-'));
+      '\nסוף החודש: ' + (answers.monthEnd || '-') + '\nהלוואות: ' + (answers.loans || '-') +
+      '\nחיסכון משוער: ' + Math.round(lastSaving) + (Funnel.utm.utm_campaign ? '\nקמפיין: ' + Funnel.utm.utm_campaign : ''));
     var sends = [];
     if (C.firebaseProjectId && C.firebaseApiKey) sends.push(sendToCrm(lead));
     if (C.leadWebhookUrl) {
