@@ -1,0 +1,30 @@
+rules_version = '2';
+// כללי אבטחה ל-Firebase של ה-CRM.
+// להדביק ב: Firebase Console → Firestore Database → Rules → Publish
+// להחליף את OWNER_UID במזהה המשתמש שלך (מוצג ב-CRM בחלון הסנכרון אחרי התחברות,
+// או ב-Firebase Console → Authentication → Users → User UID).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // נתוני ה-CRM: רק המשתמש עצמו
+    match /crm_users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // לידים מדף הנחיתה: כל אחד יכול רק להוסיף ליד (לא לקרוא, לא לשנות).
+    // רק בעל ה-CRM יכול לקרוא ולמחוק.
+    match /leads/{leadId} {
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          'name', 'phone', 'status', 'concern', 'monthEnd', 'loans',
+          'estimatedYearlySaving', 'page', 'ts',
+          'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid'
+        ])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 1 && request.resource.data.name.size() <= 100
+        && request.resource.data.phone is string
+        && request.resource.data.phone.matches('^(\\+972|0)5[0-9]{8}$');
+      allow read, delete: if request.auth != null && request.auth.uid == 'OWNER_UID';
+    }
+  }
+}

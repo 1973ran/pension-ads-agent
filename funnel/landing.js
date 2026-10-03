@@ -87,18 +87,31 @@
     try { sessionStorage.setItem('funnel_lead', JSON.stringify({ name: name, concern: answers.concern })); } catch (x) {}
 
     var done = function () { location.href = 'thank-you.html'; };
+    var waUrl = Funnel.waLink(
+      'היי, אני ' + name + '. מילאתי את שאלון השיפור הכלכלי:\n' +
+      'מצב תעסוקתי: ' + (answers.status || '-') + '\nמה לשפר: ' + (answers.concern || '-') +
+      '\nסוף החודש: ' + (answers.monthEnd || '-') + '\nהלוואות: ' + (answers.loans || '-'));
+    var sends = [];
+    if (C.firebaseProjectId && C.firebaseApiKey) sends.push(sendToCrm(lead));
     if (C.leadWebhookUrl) {
-      fetch(C.leadWebhookUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(lead) })
-        .then(done, done);
-    } else {
-      window.open(Funnel.waLink(
-        'היי, אני ' + name + '. מילאתי את שאלון השיפור הכלכלי:\n' +
-        'מצב תעסוקתי: ' + (answers.status || '-') + '\nמה לשפר: ' + (answers.concern || '-') +
-        '\nסוף החודש: ' + (answers.monthEnd || '-') + '\nהלוואות: ' + (answers.loans || '-')
-      ), '_blank');
-      done();
+      sends.push(fetch(C.leadWebhookUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(lead) }));
     }
+    if (!sends.length) { window.open(waUrl, '_blank'); return done(); }
+    // אם השמירה נכשלה, לא מאבדים את הליד: הדף עובר לוואטסאפ (חלון קופץ אחרי המתנה נחסם בדפדפן)
+    Promise.all(sends).then(done, function () { location.href = waUrl; });
 
     function fail(m) { err.textContent = m; err.hidden = false; }
   });
+
+  // כתיבת הליד לאוסף leads ב-Firestore (דרך REST, בלי SDK). ה-CRM מושך משם את הלידים.
+  function sendToCrm(lead) {
+    var fields = {};
+    Object.keys(lead).forEach(function (k) {
+      if (lead[k] !== undefined && lead[k] !== '') fields[k] = { stringValue: String(lead[k]).slice(0, 500) };
+    });
+    var url = 'https://firestore.googleapis.com/v1/projects/' + encodeURIComponent(C.firebaseProjectId) +
+      '/databases/(default)/documents/leads?key=' + encodeURIComponent(C.firebaseApiKey);
+    return fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: fields }) })
+      .then(function (r) { if (!r.ok) throw new Error('crm ' + r.status); });
+  }
 })();

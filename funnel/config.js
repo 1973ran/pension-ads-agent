@@ -8,8 +8,13 @@ window.FUNNEL_CONFIG = {
   whatsappNumber: "972525949449",
   phoneDisplay: "052-594-9449",
 
+  // חיבור ל-CRM של רן פיננסים (Firebase). להעתיק מתוך firebaseConfig: projectId ו-apiKey.
+  // כשמוגדר, כל ליד נכנס אוטומטית ל-CRM כלקוח בסטטוס "מעקב" + משימה להתקשר.
+  firebaseProjectId: "",
+  firebaseApiKey: "",
+
   // כתובת Webhook לקליטת לידים (Make / Zapier / Google Apps Script / CRM).
-  // אם ריק – הליד יועבר ישירות לוואטסאפ.
+  // אם גם ה-CRM וגם ה-Webhook ריקים – הליד יועבר ישירות לוואטסאפ.
   leadWebhookUrl: "",
 
   // קישור לקביעת פגישה (Calendly / Google Calendar booking). אם ריק – הכפתור יוסתר.
