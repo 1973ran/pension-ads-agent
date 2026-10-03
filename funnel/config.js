@@ -5,8 +5,8 @@ window.FUNNEL_CONFIG = {
   siteUrl: "https://ranmessika.com/",
 
   // מספר וואטסאפ בפורמט בינלאומי, בלי + ובלי אפסים מובילים (לדוגמה 972501234567)
-  whatsappNumber: "972500000000",
-  phoneDisplay: "050-000-0000",
+  whatsappNumber: "972525949449",
+  phoneDisplay: "052-594-9449",
 
   // כתובת Webhook לקליטת לידים (Make / Zapier / Google Apps Script / CRM).
   // אם ריק – הליד יועבר ישירות לוואטסאפ.

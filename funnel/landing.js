@@ -10,6 +10,8 @@
   if (C.licenseNumber) $('#license').textContent = '· רישיון יועץ פנסיוני מס׳ ' + C.licenseNumber;
   $('#wa-float').href = Funnel.waLink('היי, הגעתי מהאתר ואשמח לבדיקת פנסיה');
   $('#wa-float').target = '_blank';
+  $('#phone-link').textContent = C.phoneDisplay;
+  $('#phone-link').href = 'tel:' + C.phoneDisplay.replace(/-/g, '');
 
   if (C.testimonials && C.testimonials.length) {
     $('#testimonials').hidden = false;
