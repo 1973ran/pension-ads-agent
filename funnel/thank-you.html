@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>הבקשה התקבלה | רן מסיקה</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="config.js"></script>
+<script src="common.js"></script>
+</head>
+<body>
+<main class="ty">
+  <div class="card">
+    <div class="big">✅</div>
+    <h1 id="ty-title">הבקשה התקבלה!</h1>
+    <p class="lead">ניצור איתך קשר בהקדם. רוצה לחסוך זמן? אפשר להתקדם כבר עכשיו:</p>
+    <div class="actions">
+      <a class="btn btn-lg btn-full" id="ty-book" target="_blank" rel="noopener" hidden>📅 קביעת שיחה ביומן</a>
+      <a class="btn btn-lg btn-full btn-wa" id="ty-wa" target="_blank" rel="noopener">💬 המשך בוואטסאפ</a>
+    </div>
+    <h3>מה קורה עכשיו?</h3>
+    <ol>
+      <li>נחזור אליך תוך יום עסקים לתיאום שיחה קצרה.</li>
+      <li>נשלח קישור לייפוי כוח דיגיטלי למסלקה הפנסיונית.</li>
+      <li>בשיחה נציג תמונת מצב מלאה והמלצות ברורות.</li>
+    </ol>
+    <p class="fine">בינתיים, כדאי להכין את הדוח השנתי האחרון מהקרן (אם יש בהישג יד).</p>
+  </div>
+</main>
+<script>
+  (function () {
+    var C = window.FUNNEL_CONFIG, lead = {};
+    try { lead = JSON.parse(sessionStorage.getItem('funnel_lead') || '{}'); } catch (e) {}
+    if (lead.name) document.getElementById('ty-title').textContent = 'תודה, ' + lead.name.split(' ')[0] + '!';
+    document.getElementById('ty-wa').href = Funnel.waLink(
+      'היי, השארתי פרטים לבדיקת פנסיה' + (lead.concern ? ' (' + lead.concern + ')' : '') + '. מתי נוח לדבר?');
+    if (C.bookingUrl) { var b = document.getElementById('ty-book'); b.href = C.bookingUrl; b.hidden = false; }
+    Funnel.track('CompleteRegistration');
+  })();
+</script>
+</body>
+</html>
