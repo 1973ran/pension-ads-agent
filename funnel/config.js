@@ -1,6 +1,6 @@
 // ===== הגדרות המשפך – זה הקובץ היחיד שצריך לערוך =====
 window.FUNNEL_CONFIG = {
-  brandName: "רן מסיקה",
+  brandName: "רן פיננסים",
   brandTagline: "ייעוץ פנסיוני אישי ובלתי תלוי",
   siteUrl: "https://ranmessika.com/",
 

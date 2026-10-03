@@ -1,28 +1,13 @@
 :root {
-  --bg: #f7f8fb;
-  --surface: #ffffff;
-  --band: #eef2f8;
-  --text: #13213a;
-  --muted: #5b6880;
-  --border: #dde3ee;
-  --primary: #0f5c8c;
-  --primary-ink: #ffffff;
-  --accent: #e8a33d;
-  --ok: #138a5e;
-  --danger: #c2413a;
-  --shadow: 0 10px 30px rgba(19, 33, 58, .08);
+  /* צבעי המותג של רן פיננסים: שחור וזהב. כהה כברירת מחדל, כמו באתר */
+  --bg: #0b0b0c; --surface: #17171a; --band: #111113; --text: #f2efe8; --muted: #a8a397;
+  --border: #2c2b28; --primary: #b49a55; --primary-ink: #141210; --accent: #b49a55;
+  --ok: #4fbf8a; --danger: #e0695f; --shadow: 0 10px 30px rgba(0, 0, 0, .45);
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0e1522; --surface: #162034; --band: #121b2c; --text: #e8edf6; --muted: #9aa7bf;
-    --border: #26324a; --primary: #3d9bd6; --primary-ink: #08121f; --accent: #f0b65a;
-    --shadow: 0 10px 30px rgba(0, 0, 0, .35);
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0e1522; --surface: #162034; --band: #121b2c; --text: #e8edf6; --muted: #9aa7bf;
-  --border: #26324a; --primary: #3d9bd6; --primary-ink: #08121f; --accent: #f0b65a;
-  --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+:root[data-theme="light"] {
+  --bg: #faf8f3; --surface: #ffffff; --band: #f1ece0; --text: #17161a; --muted: #625d52;
+  --border: #e3dccb; --primary: #8f7638; --primary-ink: #ffffff; --accent: #b49a55;
+  --ok: #138a5e; --danger: #c2413a; --shadow: 0 10px 30px rgba(23, 22, 26, .08);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,7 +32,7 @@ section { padding: 64px 0; }
 .brand small { display: block; font-size: 12px; color: var(--muted); }
 .brand-mark { width: 38px; height: 38px; border-radius: 10px; background: var(--primary); color: var(--primary-ink); display: grid; place-items: center; font-weight: 900; }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--primary); color: var(--primary-ink); border: 0; border-radius: 10px; padding: 12px 22px; font: 700 16px 'Heebo', sans-serif; cursor: pointer; transition: transform .15s, opacity .15s; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--primary); color: var(--primary-ink); border: 0; border-radius: 999px; padding: 12px 22px; font: 700 16px 'Heebo', sans-serif; cursor: pointer; transition: transform .15s, opacity .15s; }
 .btn:hover { transform: translateY(-1px); opacity: .93; }
 .btn:disabled { opacity: .6; cursor: wait; }
 .btn-sm { padding: 8px 14px; font-size: 14px; }
